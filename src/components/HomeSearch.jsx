@@ -8,7 +8,8 @@ import { useState } from "react";
 export default function HomeSearch() {  
     const router = useRouter();
     const[input, setInput] = useState("");
-    
+    const[randomSearchLoading,setRandomSearchLoading] = useState(false);
+
     function handleSubmit(e){
         e.preventDefault();
         if(!input.trim()) return;
@@ -16,11 +17,13 @@ export default function HomeSearch() {
     }
 
     async function randomSearch(){
+        setRandomSearchLoading(true);
         const response = await fetch("https://random-word-api.herokuapp.com/word")
             .then((res) => res.json())
             .then((data) => data[0]);
         if(!response) return;
         router.push(`/search/web?searchTerm=${response}`);
+        setRandomSearchLoading(false);
     }
     return (
     <>
@@ -35,8 +38,12 @@ export default function HomeSearch() {
                 Google Search
             </button>
 
-            <button  onClick={randomSearch} className="btn flex items-center justify-center disabled:opacity-80">
-                I am Feeling Lucky
+            <button disabled={randomSearchLoading}  onClick={randomSearch} className="btn flex items-center justify-center disabled:opacity-80">
+                { randomSearchLoading ?(
+                <img src="spinner.svg" alt="loading..." className="h-6 text-center" />
+                ):(
+                "I am Feeling Lucky"
+                )}
             </button>
         </div>
     </>
