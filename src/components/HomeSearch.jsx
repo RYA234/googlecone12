@@ -13,7 +13,7 @@ export default function HomeSearch() {
     function handleSubmit(e){
         e.preventDefault();
         if(!input.trim()) return;
-        router.push(`/search/web?_searchTerm=${input}`);
+        router.push(`/search/web?searchTerm=${input}`);
     }
 
     async function randomSearch(){
@@ -29,7 +29,7 @@ export default function HomeSearch() {
     <>
         <form onSubmit={handleSubmit} className="flex w-full mt-5 mx-auto max-w-[90%] border border-gray-200 px-5 py-3 rounded-full hover:shadow-md focus-within:shadow-md transition-shadow sm:max-w-xl lg:max-w-2xl">
             <AiOutlineSearch className="text-xl text-gray-500 mr-3" />
-            <input type="text" className="flex-grow focus:outline-none" onChange={(e) => setInput(e.target.value)} value={input}/>
+            <input type="text" className="flex-grow focus:outline-none" value={input} onChange={(e) => setInput(e.target.value)} />
             <BsFillMicFill className="text-lg"/>
         </form>
 
@@ -37,7 +37,7 @@ export default function HomeSearch() {
             <button onClick={handleSubmit}  className="btn">
                 Google Search
             </button>
-
+        
             <button disabled={randomSearchLoading}  onClick={randomSearch} className="btn flex items-center justify-center disabled:opacity-80">
                 { randomSearchLoading ?(
                 <img src="spinner.svg" alt="loading..." className="h-6 text-center" />
